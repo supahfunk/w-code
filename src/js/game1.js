@@ -77,7 +77,28 @@ function gameInit1() {
     function onPress() {
         TweenLite.to(this.target, 0.3, {
             opacity: 0.75,
-            scale: 0.9
+            scale: 1.1
+        });
+        TweenMax.to(this.target, 0.2, {
+            transformOrigin: "50%",
+            rotation: 4,
+            ease: Power1.easeInOut,
+            onComplete: function () {
+                TweenMax.fromTo(
+                    this.target,
+                    0.4, {
+                        transformOrigin: "50%",
+                        rotation: 4,
+                        ease: Power1.easeInOut
+                    }, {
+                        transformOrigin: "50%",
+                        rotation: -4,
+                        repeat: -1,
+                        ease: Power1.easeInOut,
+                        yoyo: true
+                    }
+                );
+            }
         });
     }
 
@@ -85,8 +106,10 @@ function gameInit1() {
         hitTest(this.target);
         reorderTiles();
         TweenLite.to(this.target, 0.3, {
+            overwrite: 'all',
             opacity: 1,
-            scale: 1
+            scale: 1,
+            rotation: 0
         });
 
         checkSolution();
@@ -177,7 +200,7 @@ function gameInit1() {
     function checkSolution() {
         if ($('#drop img', $g).length == 3) {
             end = true;
-            game2();
+            setTimeout(game2, 1000);
         } else {
             end = false;
         }

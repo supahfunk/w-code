@@ -228,7 +228,7 @@ function gameInit2() {
 
         if ($('.dot.active', $g).length == 4) {
             end = true;
-            game3();
+            setTimeout(game3, 1000);
         } else {
             end = false;
         }

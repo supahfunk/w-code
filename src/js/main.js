@@ -20,6 +20,17 @@ if (isSafari === true) {
 
 
 /*--------------------------------------------------
+App Height
+--------------------------------------------------*/
+var appHeight = function(){
+    const doc = document.documentElement
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+}
+window.addEventListener('resize', appHeight);
+appHeight();
+
+
+/*--------------------------------------------------
 Scrollbar Listener
 --------------------------------------------------*/
 var config = {

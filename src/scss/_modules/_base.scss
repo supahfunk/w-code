@@ -4,6 +4,10 @@
 Base
 --------------------------------------------------*/
 
+:root {
+    --app-height: 100%;
+}
+
 body {
     font-family: 'Karla', sans-serif;
     background: #181617;
@@ -32,18 +36,18 @@ body {
 .wrapper {
     position: relative;
     z-index: 1;
-    height: 100vh;
+    height: var(--app-height);
     .item {
         position: relative;
         z-index: 1;
-        min-height: 100vh;
+        min-height: var(--app-height);
         display: none;
         text-align: center;
         color: #fff;
         .shadow {
             position: fixed;
             width: 100vw;
-            height: 100vh;
+            height: var(--app-height);
             top: 0;
             left: 0;
             z-index: 2;
@@ -55,7 +59,7 @@ body {
         }
     }
     .game-area {
-        min-height: 100vh;
+        min-height: var(--app-height);
         width: 100vw;
         display: flex;
         color: #000;
@@ -101,7 +105,7 @@ body {
         }
     }
     .end {
-        height: 100vh;
+        height: var(--app-height);
         width: 100vw;
         background: #fff;
         display: flex;
