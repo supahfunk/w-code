@@ -1,0 +1,137 @@
+@import '_variables.scss';
+@import '_mixins.scss';
+/*--------------------------------------------------
+Rules
+--------------------------------------------------*/
+
+.rules {
+    padding: 100px 60px;
+    @include xs {
+        padding: 60px 40px;
+    }
+    .rule-svg {
+        margin: 0 auto 200px;
+        max-width: 90%;
+        height: auto;
+        @include md {
+            margin-bottom: 100px;
+        }
+        @include xs {
+            margin-bottom: 40px;
+        }
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            color: #fff;
+            font-size: 66px;
+            line-height: 1.2;
+            margin-bottom: 200px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 0 150px;
+            @include lg {
+                font-size: 50px;
+            }
+            @media (max-height: 670px) {
+                font-size: 50px;
+            }
+            @include md {
+                font-size: 40px;
+                margin-bottom: 100px;
+            }
+            @include sm {
+                font-size: 32px;
+            }
+            @include xs {
+                font-size: 24px;
+                padding: 0;
+                margin-bottom: 50px;
+            }
+            @include xxs {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+            span {
+                display: block;
+                margin: 0 auto;
+                max-width: 1260px;
+            }
+            em {
+                z-index: 1;
+                position: absolute;
+                top: 17px;
+                left: 0;
+                font-size: 48px;
+                letter-spacing: .3em;
+                font-style: normal;
+                @include lg {
+                    font-size: 42px;
+                    top: 7px;
+                }
+                @media (max-height: 670px) {
+                    font-size: 42px;
+                    top: 7px;
+                }
+                @include md {
+                    font-size: 34px;
+                    top: 6px;
+                }
+                @include sm {
+                    font-size: 25px;
+                    top: 5px;
+                }
+                @include xs {
+                    position: static;
+                    margin-bottom: 5px;
+                    font-size: 16px;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.rules-resume {
+    padding: 60px 60px;
+    flex: 0 0 50%;
+    color: #fff;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include md {
+        display: none;
+    }
+    img {
+        width: 500px;
+        height: auto;
+        margin-bottom: 50px;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            color: #fff;
+            font-size: 24px;
+            line-height: 1.2;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 0 80px;
+            em {
+                position: absolute;
+                top: 5px;
+                left: 0;
+                font-size: 19px;
+                letter-spacing: .3em;
+                font-style: normal;
+            }
+        }
+    }
+}

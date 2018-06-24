@@ -1,0 +1,43 @@
+@import '_variables.scss';
+@import '_mixins.scss';
+/*--------------------------------------------------
+Layout
+--------------------------------------------------*/
+
+.layout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    height: 100vh;
+    width: 100vw;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    &:before {
+        content: '';
+        position: absolute;
+        width: calc(100% - 80px);
+        height: 100%;
+        border-left: 1px solid rgba(255, 255, 255, .5);
+        border-right: 1px solid rgba(255, 255, 255, .2);
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        @include xs {
+            width: calc(100% - 40px);
+        }
+    }
+    .logo {
+        position: absolute;
+        top: 22px;
+        left: 60px;
+        font-size: 30px;
+        line-height: 1;
+        color: #ffffff;
+        font-weight: bold;
+        @include xs {
+            left: 40px;
+            font-size: 20px;
+        }
+    }
+}

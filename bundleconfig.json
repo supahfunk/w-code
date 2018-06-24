@@ -1,0 +1,45 @@
+[{
+        "inputFiles": [
+            "src/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js",
+            "src/js/vendor/smooth-scrollbar.min.js",
+            "src/js/vendor/isMobile.min.js",
+            "src/js/vendor/jquery.min.js",
+            "src/js/vendor/TweenMax.min.js",
+            "src/js/vendor/Draggable.min.js",
+            "src/js/vendor/CSSPlugin.min.js",
+            "src/js/vendor/blob.js"
+        ],
+        "outputFileName": "dist/js/vendors.js",
+        "minify": {
+            "enabled": false
+        }
+    },
+    {
+        "inputFiles": [
+            "src/js/game1.js",
+            "src/js/game2.js",
+            "src/js/game3.js"
+        ],
+        "outputFileName": "dist/js/game.js",
+        "minify": {
+            "enabled": true
+        }
+    },
+    {
+        "inputFiles": [
+            "src/css/main.css"
+        ],
+        "outputFileName": "dist/css/main.css",
+        "minify": {
+            "enabled": true
+        }
+    }, {
+        "inputFiles": [
+            "src/js/main.js"
+        ],
+        "outputFileName": "dist/js/main.js",
+        "minify": {
+            "enabled": true
+        }
+    }
+]

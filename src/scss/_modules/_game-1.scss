@@ -1,0 +1,84 @@
+@import 'variables';
+@import 'mixins';
+/*--------------------------------------------------
+Game 1
+--------------------------------------------------*/
+
+#game-1 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    main {
+        padding: 10px;
+        position: relative;
+        display: flex;
+        align-content: flex-start;
+        align-items: flex-start;
+        user-select: none;
+        flex-wrap: wrap;
+        .cols {
+            position: absolute;
+            z-index: 1;
+            top: -20px;
+            left: 160px;
+            transform-origin: 0 0;
+            transform: rotate(90deg);
+            width: 610px;
+        }
+    }
+    .fix {
+        flex: 0 0 100%;
+        width: 100%;
+        height: 160px;
+    }
+    .zone {
+        position: relative;
+        min-width: 110px;
+        height: 460px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #pool {
+        margin-right: 90px;
+    }
+    #drop {
+        margin-top: -170px;
+        width: 200px;
+    }
+    .tile,
+    .fix-tile {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        top: 0;
+        left: 0;
+        &.dragging {
+            img {
+                cursor: grabbing !important;
+            }
+        }
+        img {
+            width: auto;
+            height: auto;
+            max-width: none;
+            transform: translate(-15px, -15px);
+            cursor: grab !important;
+            &.triangle {
+                transform: translate(-33px, -21px);
+            }
+        }
+    }
+    h3 {
+        color: #555;
+        position: relative;
+        z-index: 9999999;
+        pointer-events: none;
+        text-shadow: 1px 1px 0px #fafafa, -1px -1px 0px #fafafa, 1px -1px 0px #fafafa, -1px 1px 0px #fafafa;
+    }
+}
