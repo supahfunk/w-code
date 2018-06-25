@@ -7,7 +7,7 @@ End
 .end {
     display: block !important;
     text-align: center;
-    padding: 100px 60px;
+    padding: 10px 0 100px;
     min-height: var(--app-height);
     background: #fff;
     height: auto;
@@ -15,11 +15,25 @@ End
     position: relative;
     z-index: 3;
     @include xs {
-        padding: 60px 40px;
+        padding: 40px 0;
+    }
+    canvas {
+        position: absolute;
+        @include xxs {
+            margin-top: 8vh;
+        }
     }
     .end-logo {
         text-align: center;
         margin-bottom: 50px;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: -10vh;
+        @media (max-height: 480px) {
+            margin-bottom: 40px;
+        }
         img {
             margin: 0 auto;
         }
@@ -30,9 +44,13 @@ End
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
+        padding: 0 60px;
+        @include xxs {
+            padding: 0 20px;
+        }
         div {
-            width: 200px;
-            @include sm {
+            width: 25%;
+            @include xs {
                 flex: 0 0 50%;
                 width: 50%;
             }

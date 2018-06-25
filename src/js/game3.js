@@ -14,11 +14,9 @@ function tangram(drag, drop) {
         diffX = (endX - startX) / scale,
         diffY = (endY - startY) / scale;
 
-    console.log(scale);
-
     Draggable.create($drag, {
         bounds: $g,
-        onDragStart: function () {
+        onPress: function () {
             var $t = $(this.target);
             TweenLite.to(this.target, 0.3, {
                 opacity: 0.75,
@@ -76,6 +74,22 @@ function tangram(drag, drop) {
         }
     })
 }
+
+
+$('#game-3').on('click', '.hint img', function () {
+    TweenMax.staggerTo('#game-3 .droppable', .7, {
+        opacity: .3,
+        ease: Power3.easeInOut,
+        onComplete: function () {
+            setTimeout(function () {
+                TweenLite.to('#game-3 .droppable', .5, {
+                    opacity: 0
+                });
+            }, 1000)
+        }
+    }, .08);
+
+});
 
 var endGame3 = false;
 

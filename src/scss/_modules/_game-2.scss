@@ -30,12 +30,17 @@ Game 2
         }
         @include xxs {
             transform-origin: 0 0;
-            transform: scale(.4) translate(30%, 200px);
+            transform: scale(.4) translate(80%, 200px);
             height: 360px;
         }
-        @media (max-width: 320px) {
-            transform: scale(.4) translate(20%, 200px);
-        }
+    }
+    .game-hint {
+        position: absolute;
+        z-index: -1;
+        top: 224px;
+        left: 305px;
+        opacity: 0;
+        pointer-events: none;
     }
     .rows {
         position: absolute;

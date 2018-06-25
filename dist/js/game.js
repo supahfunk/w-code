@@ -8,7 +8,8 @@ function gameInit1() {
         drop = $('#drop', $g),
         height = 110,
         margin = 0,
-        gutter = 50;
+        gutter = 50,
+        $hint = $('.hint img', $g);
 
     tiles.each(function (i, tile) {
 
@@ -205,6 +206,31 @@ function gameInit1() {
             end = false;
         }
     }
+
+    $hint.on('click', function () {
+        $gameHint = $('.game-hint', $g);
+        TweenMax.fromTo($gameHint, .5, {
+            x: 0,
+            opacity: .5
+        }, {
+            x: 200,
+            ease: Power2.easeInOut,
+            onComplete: function () {
+                setTimeout(function () {
+                    TweenLite.to($gameHint, .5, {
+                        opacity: 0
+                    });
+                }, 500)
+            }
+        });
+
+        TweenMax.fromTo($gameHint, .7, {
+            y: 0,
+        }, {
+            y: -170,
+            ease: Power2.easeInOut
+        });
+    });
 }
 
 
@@ -226,7 +252,10 @@ function gameInit2() {
         drop = $('#drop', $g),
         width = 110,
         margin = 0,
-        gutter = 50;
+        gutter = 50,
+        $hint = $('.hint img', $g);
+
+    console.log($hint.length);
 
     tiles.each(function (i, tile) {
         tile = $(tile);
@@ -451,6 +480,32 @@ function gameInit2() {
             end = false;
         }
     }
+
+    $hint.on('click', function () {
+        console.log('ok');
+        $gameHint = $('.game-hint', $g);
+        TweenMax.fromTo($gameHint, .5, {
+            y: 0,
+            opacity: .5
+        }, {
+            y: -239,
+            ease: Power2.easeInOut,
+            onComplete: function () {
+                setTimeout(function () {
+                    TweenLite.to($gameHint, .5, {
+                        opacity: 0
+                    });
+                }, 500)
+            }
+        });
+
+        TweenMax.fromTo($gameHint, .6, {
+            x: 0,
+        }, {
+            x: -340,
+            ease: Power2.easeInOut
+        });
+    });
 }
 
 
@@ -476,11 +531,9 @@ function tangram(drag, drop) {
         diffX = (endX - startX) / scale,
         diffY = (endY - startY) / scale;
 
-    console.log(scale);
-
     Draggable.create($drag, {
         bounds: $g,
-        onDragStart: function () {
+        onPress: function () {
             var $t = $(this.target);
             TweenLite.to(this.target, 0.3, {
                 opacity: 0.75,
@@ -539,6 +592,22 @@ function tangram(drag, drop) {
     })
 }
 
+
+$('#game-3').on('click', '.hint img', function () {
+    TweenMax.staggerTo('#game-3 .droppable', .7, {
+        opacity: .3,
+        ease: Power3.easeInOut,
+        onComplete: function () {
+            setTimeout(function () {
+                TweenLite.to('#game-3 .droppable', .5, {
+                    opacity: 0
+                });
+            }, 1000)
+        }
+    }, .08);
+
+});
+
 var endGame3 = false;
 
 function checkSolutionGame3() {
@@ -550,3 +619,97 @@ function checkSolutionGame3() {
         endGame3 = false;
     }
 }
+blob2 = new Blob();
+blob2.radius = 200;
+blob2.strokeStyle = '#141414';
+var end = document.getElementById('end');
+
+init2 = function init2() {
+    canvas = document.createElement('canvas');
+    canvas.setAttribute('touch-action', 'none');
+
+    end.appendChild(canvas);
+    canvas.setAttribute('id', 'end-canvas');
+
+    var resize = function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    var oldMousePoint = {
+        x: 0,
+        y: 0
+    };
+    var hover = false;
+    var mouseMove = function mouseMove(e) {
+
+        var pos = blob2.center;
+        var diff = {
+            x: e.clientX - pos.x,
+            y: e.clientY - pos.y
+        };
+        var dist = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+        var angle = null;
+
+        blob2.mousePos = {
+            x: pos.x - e.clientX,
+            y: pos.y - e.clientY
+        };
+
+        blob2.color = '#fff';
+
+
+        if (dist < blob2.radius && hover === false) {
+            var vector = {
+                x: e.clientX - pos.x,
+                y: e.clientY - pos.y
+            };
+            angle = Math.atan2(vector.y, vector.x);
+            hover = true;
+
+        } else if (dist > blob2.radius && hover === true) {
+            var _vector = {
+                x: e.clientX - pos.x,
+                y: e.clientY - pos.y
+            };
+            angle = Math.atan2(_vector.y, _vector.x);
+            hover = false;
+            blob2.color = null;
+        }
+
+        if (typeof angle == 'number') {
+
+            var nearestPoint = null;
+            var distanceFromPoint = 100;
+
+            blob2.points.forEach(function (point) {
+                if (Math.abs(angle - point.azimuth) < distanceFromPoint) {
+                    // console.log(point.azimuth, angle, distanceFromPoint);
+                    nearestPoint = point;
+                    distanceFromPoint = Math.abs(angle - point.azimuth);
+                }
+            });
+
+            if (nearestPoint) {
+                var strength = {
+                    x: oldMousePoint.x - e.clientX,
+                    y: oldMousePoint.y - e.clientY
+                };
+                strength = Math.sqrt(strength.x * strength.x + strength.y * strength.y) * 10;
+                if (strength > 100) strength = 100;
+                nearestPoint.acceleration = strength / 100 * (hover ? -1 : 1);
+            }
+        }
+
+        oldMousePoint.x = e.clientX;
+        oldMousePoint.y = e.clientY;
+    };
+    // window.addEventListener('mousemove', mouseMove);
+    window.addEventListener('pointermove', mouseMove);
+
+    blob2.canvas = canvas;
+    blob2.init();
+    blob2.render();
+};

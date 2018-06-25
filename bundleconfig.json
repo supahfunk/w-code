@@ -18,7 +18,8 @@
         "inputFiles": [
             "src/js/game1.js",
             "src/js/game2.js",
-            "src/js/game3.js"
+            "src/js/game3.js",
+            "src/js/end.js"
         ],
         "outputFileName": "dist/js/game.js",
         "minify": {

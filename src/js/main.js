@@ -63,7 +63,7 @@ function scrollbarInit() {
                 shadow.style.left = offset.x + 'px';
             });
 
-            console.log(status);
+            // console.log(status);
 
             // splitText
             /* $('.splitted-phrase').each(function () {
@@ -102,7 +102,7 @@ function getSpeed() {
         speed = scrollbar.offset.y - offsetY;
         offsetY = scrollbar.offset.y;
         $skewers.css({
-            transform: 'skewY(' + speed * 0.15 + 'deg)'
+            transform: 'skewY(' + speed * -0.15 + 'deg)'
             // transform: 'scale(' + (1 - (speed * 0.001)) + ')'
         });
         window.requestAnimationFrame(getSpeed);
@@ -156,9 +156,12 @@ function game3() {
 function game4() {
     $("#item-3").fadeOut(500, function () {
         goUp();
-        $("#item-4").fadeIn(800, function () {
+        $("#item-4").fadeIn(1500, function () {
             scrollbarUpdate();
         });
+        if (end != null) {
+            init2();
+        }
     });
 }
 
@@ -190,6 +193,7 @@ function splitText() {
 Doc Ready
 --------------------------------------------------*/
 $(function () {
+    console.log('%c Coded by Websolute ', 'background: #01c0f6; color: #fff; border-radius: 20px; padding: 10px;');
     scrollbarInit();
     getSpeed();
 

@@ -5793,7 +5793,7 @@ var Blob = function () {
             var _p2 = p1;
 
             ctx.beginPath();
-            ctx.moveTo(center.x, center.y);
+            ctx.moveTo(center.x, 0);
             ctx.moveTo((p0.x + p1.x) / 2, (p0.y + p1.y) / 2);
 
             for (var i = 1; i < points; i++) {
@@ -5819,9 +5819,10 @@ var Blob = function () {
 
             // ctx.closePath();
             ctx.fillStyle = this.color;
-            ctx.fill();
-            ctx.strokeStyle = '#0c0b0b';
-            // ctx.stroke();
+            //ctx.fill();
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = this.strokeStyle;
+            ctx.stroke();
 
             /*
                 ctx.fillStyle = '#0c0b0b';
@@ -5846,6 +5847,14 @@ var Blob = function () {
         },
         get: function get() {
             return this._color || '#0c0b0b';
+        }
+    }, {
+        key: 'strokeStyle',
+        set: function set(value) {
+            this._strokeStyle = value;
+        },
+        get: function get() {
+            return this._strokeStyle || '#000';
         }
     }, {
         key: 'canvas',
@@ -5999,7 +6008,7 @@ var Point = function () {
             }
         },
         get: function get() {
-            return this._friction || 0.0085;
+            return this._friction || 0.0185;
         }
     }]);
 
@@ -6007,13 +6016,14 @@ var Point = function () {
 }();
 
 blob = new Blob();
+blob.radius = 200;
+blob.strokeStyle = '#000';
+var item1 = document.getElementById('item-1');
 
 init = function init() {
     canvas = document.createElement('canvas');
     canvas.setAttribute('touch-action', 'none');
-    wrapper = document.getElementById('item-1');
-
-    wrapper.appendChild(canvas);
+    item1.appendChild(canvas);
 
     var resize = function resize() {
         canvas.width = window.innerWidth;
@@ -6058,6 +6068,7 @@ init = function init() {
             angle = Math.atan2(_vector.y, _vector.x);
             hover = false;
             blob.color = null;
+            blob.strokeStyle = '#000';
         }
 
         if (typeof angle == 'number') {
@@ -6095,4 +6106,6 @@ init = function init() {
     blob.render();
 };
 
-init();
+if (item1 != null) {
+    init();
+}

@@ -53,6 +53,13 @@ Game 1
         @media (max-width: 320px) {
             transform: scale(.5) translateX(20%);
         }
+        .game-hint {
+            position: absolute;
+            z-index: -1;
+            top: 148px;
+            left: -23px;
+            pointer-events: none;
+        }
         .cols {
             position: absolute;
             z-index: 1;
@@ -100,7 +107,7 @@ Game 1
             width: auto;
             height: auto;
             max-width: none;
-            transform: translate(-15px, -15px);
+            transform: translate(-9px, -15px);
             cursor: grab !important;
             &.triangle {
                 transform: translate(-33px, -21px);

@@ -8,7 +8,10 @@ function gameInit2() {
         drop = $('#drop', $g),
         width = 110,
         margin = 0,
-        gutter = 50;
+        gutter = 50,
+        $hint = $('.hint img', $g);
+
+    console.log($hint.length);
 
     tiles.each(function (i, tile) {
         tile = $(tile);
@@ -233,6 +236,32 @@ function gameInit2() {
             end = false;
         }
     }
+
+    $hint.on('click', function () {
+        console.log('ok');
+        $gameHint = $('.game-hint', $g);
+        TweenMax.fromTo($gameHint, .5, {
+            y: 0,
+            opacity: .5
+        }, {
+            y: -239,
+            ease: Power2.easeInOut,
+            onComplete: function () {
+                setTimeout(function () {
+                    TweenLite.to($gameHint, .5, {
+                        opacity: 0
+                    });
+                }, 500)
+            }
+        });
+
+        TweenMax.fromTo($gameHint, .6, {
+            x: 0,
+        }, {
+            x: -340,
+            ease: Power2.easeInOut
+        });
+    });
 }
 
 
