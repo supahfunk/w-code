@@ -229,7 +229,10 @@ function gameInit2() {
 
         if ($('.dot.active', $g).length == 4) {
             end = true;
-            setTimeout(game3, 500);
+            setTimeout(function () {
+                $('#item-2 .well-done').addClass('active');
+            }, 500);
+            setTimeout(game3, 2500);
         } else {
             end = false;
         }

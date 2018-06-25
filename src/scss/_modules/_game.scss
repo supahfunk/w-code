@@ -12,9 +12,29 @@ Game Area
     position: relative;
     z-index: 3;
     min-height: var(--app-height);
+    .well-done {
+        background: #fff;
+        width: 50vw;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        transform: translateX(100%);
+        opacity: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        font-weight: bold;
+        transition: transform .5s $smooth;
+        &.active {
+            transform: translateX(0);
+        }
+    }
     .game {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         flex: 0 0 50%;
         display: flex;
         align-items: center;

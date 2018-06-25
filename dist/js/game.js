@@ -201,7 +201,10 @@ function gameInit1() {
     function checkSolution() {
         if ($('#drop img', $g).length == 3) {
             end = true;
-            setTimeout(game2, 500);
+            setTimeout(function () {
+                $('#item-1 .well-done').addClass('active');
+            }, 500);
+            setTimeout(game2, 2500);
         } else {
             end = false;
         }
@@ -473,7 +476,10 @@ function gameInit2() {
 
         if ($('.dot.active', $g).length == 4) {
             end = true;
-            setTimeout(game3, 500);
+            setTimeout(function () {
+                $('#item-2 .well-done').addClass('active');
+            }, 500);
+            setTimeout(game3, 2500);
         } else {
             end = false;
         }
@@ -612,7 +618,10 @@ function checkSolutionGame3() {
     $g = $('#game-3');
     if ($('.tangram .dropped').length == 8) {
         endGame3 = true;
-        setTimeout(game4, 500);
+        setTimeout(function () {
+            $('#item-3 .well-done').addClass('active');
+        }, 500);
+        setTimeout(game4, 2500);
     } else {
         endGame3 = false;
     }

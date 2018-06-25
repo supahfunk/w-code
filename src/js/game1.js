@@ -201,7 +201,10 @@ function gameInit1() {
     function checkSolution() {
         if ($('#drop img', $g).length == 3) {
             end = true;
-            setTimeout(game2, 500);
+            setTimeout(function () {
+                $('#item-1 .well-done').addClass('active');
+            }, 500);
+            setTimeout(game2, 2500);
         } else {
             end = false;
         }

@@ -97,7 +97,10 @@ function checkSolutionGame3() {
     $g = $('#game-3');
     if ($('.tangram .dropped').length == 8) {
         endGame3 = true;
-        setTimeout(game4, 500);
+        setTimeout(function () {
+            $('#item-3 .well-done').addClass('active');
+        }, 500);
+        setTimeout(game4, 2500);
     } else {
         endGame3 = false;
     }
