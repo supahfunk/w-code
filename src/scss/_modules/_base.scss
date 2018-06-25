@@ -47,7 +47,7 @@ body {
         .shadow {
             position: fixed;
             width: 100vw;
-            height: var(--app-height);
+            height: 100vh;
             top: 0;
             left: 0;
             z-index: 2;
@@ -59,7 +59,7 @@ body {
         }
     }
     .game-area {
-        min-height: var(--app-height);
+        min-height: 100%;
         width: 100vw;
         display: flex;
         color: #000;

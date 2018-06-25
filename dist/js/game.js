@@ -200,7 +200,7 @@ function gameInit1() {
     function checkSolution() {
         if ($('#drop img', $g).length == 3) {
             end = true;
-            setTimeout(game2, 1000);
+            setTimeout(game2, 500);
         } else {
             end = false;
         }
@@ -446,7 +446,7 @@ function gameInit2() {
 
         if ($('.dot.active', $g).length == 4) {
             end = true;
-            setTimeout(game3, 1000);
+            setTimeout(game3, 500);
         } else {
             end = false;
         }
@@ -541,7 +541,7 @@ function checkSolutionGame3() {
     $g = $('#game-3');
     if ($('.tangram .dropped').length == 8) {
         endGame3 = true;
-        setTimeout(game4, 1000);
+        setTimeout(game4, 500);
     } else {
         endGame3 = false;
     }

@@ -21,16 +21,20 @@ Game 2
             transform: scale(.8);
         }
         @include md {
-            transform: scale(1);
-        }
-        @include sm {
-            transform: scale(.8);
+            transform: scale(.8) translateY(100px);
+            height: 500px;
         }
         @include xs {
-            transform: scale(.5);
+            transform: scale(.6) translateY(70px);
+            height: 400px;
         }
         @include xxs {
-            transform: scale(.4) translate(-40%, -30%);
+            transform-origin: 0 0;
+            transform: scale(.4) translate(30%, 200px);
+            height: 360px;
+        }
+        @media (max-width: 320px) {
+            transform: scale(.4) translate(20%, 200px);
         }
     }
     .rows {

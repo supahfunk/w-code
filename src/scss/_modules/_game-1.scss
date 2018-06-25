@@ -13,6 +13,19 @@ Game 1
     flex-direction: column;
     overflow: hidden;
     padding: 100px 0;
+    max-width: 100vw;
+    @include lg {
+        padding: 50px 0;
+    }
+    @include md {
+        padding: 20px 0;
+    }
+    @include sm {
+        padding: 0 0;
+    }
+    @include xs {
+        height: 500px;
+    }
     main {
         padding: 10px;
         position: relative;
@@ -21,6 +34,25 @@ Game 1
         align-items: flex-start;
         user-select: none;
         flex-wrap: wrap;
+        @include lg {
+            transform: scale(.8);
+        }
+        @include md {
+            transform: scale(.7);
+        }
+        @include sm {
+            transform: scale(.6);
+        }
+        @include xs {
+            transform: scale(.5);
+            width: 422px;
+        }
+        @include xxs {
+            transform: scale(.5) translateX(10%);
+        }
+        @media (max-width: 320px) {
+            transform: scale(.5) translateX(20%);
+        }
         .cols {
             position: absolute;
             z-index: 1;

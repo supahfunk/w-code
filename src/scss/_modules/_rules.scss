@@ -55,17 +55,36 @@ Rules
                 font-size: 18px;
                 margin-bottom: 30px;
             }
-            span {
+            &>span {
                 display: block;
                 margin: 0 auto;
                 max-width: 1260px;
-
                 @include xl {
                     max-width: 900px;
                 }
-
                 @include lg {
                     max-width: 800px;
+                }
+            }
+            .splitted-word {
+                overflow: hidden;
+                display: inline-block;
+                line-height: 1.1;
+                white-space: nowrap;
+            }
+            .splitted-letter {
+                display: inline-block;
+                transform: scale(0);
+                transition: all .7s $smooth;
+                @for $i from 1 to 300 {
+                    &:nth-child(#{$i}) {
+                        transition-delay: $i * 0.044s;
+                    }
+                }
+            }
+            .pop {
+                .splitted-letter {
+                    transform: scale(1);
                 }
             }
             em {

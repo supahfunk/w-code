@@ -22,9 +22,9 @@ if (isSafari === true) {
 /*--------------------------------------------------
 App Height
 --------------------------------------------------*/
-var appHeight = function(){
-    const doc = document.documentElement
-    doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+var appHeight = function () {
+    var doc = document.documentElement
+    doc.style.setProperty('--app-height', $(window).height() + 'px');
 }
 window.addEventListener('resize', appHeight);
 appHeight();
@@ -36,7 +36,9 @@ Scrollbar Listener
 var config = {
     originalScroll: false,
 }
-
+var scrollbar,
+    offsetY = 0,
+    speed;
 
 function scrollbarInit() {
     parallax = document.querySelectorAll('[data-scroll]');
@@ -61,7 +63,21 @@ function scrollbarInit() {
                 shadow.style.left = offset.x + 'px';
             });
 
+            console.log(status);
+
+            // splitText
+            /* $('.splitted-phrase').each(function () {
+                var offset = $(this).attr('data-offset') || 200,
+                    trigger = ($(window).height() - offset) > 200 ? $(window).height() - offset : 200;
+
+                if ($(this).offset().top <= trigger) {
+                    $(this).addClass('pop');
+                } else {
+                    // $(this).removeClass('pop');
+                }
+            }); */
         });
+
 
         if (config.originalScroll) {
             $('body').addClass('scroll');
@@ -77,80 +93,95 @@ function scrollbarInit() {
 
 
 /*--------------------------------------------------
+Get Speed
+--------------------------------------------------*/
+var $skewers = $('.intro, .rules, .rules-resume');
+
+function getSpeed() {
+    if (typeof scrollbar != 'undefined') {
+        speed = scrollbar.offset.y - offsetY;
+        offsetY = scrollbar.offset.y;
+        $skewers.css({
+            transform: 'skewY(' + speed * 0.1 + 'deg)'
+        });
+        window.requestAnimationFrame(getSpeed);
+    }
+}
+
+
+
+/*--------------------------------------------------
 Games
 --------------------------------------------------*/
-function game2() {
-    $("#item-1").fadeOut(500);
-    scrollbar.scrollTo(0, 0, 600);
-    $("#item-2").fadeIn(500, function () {
+function goUp() {
+    if (typeof scrollbar != 'undefined') {
+        scrollbar.scrollTo(0, 0, 0);
+    } else {
+        $('html, body').stop().animate({
+            scrollTop: 0
+        }, 1);
+    }
+}
+
+function scrollbarUpdate() {
+    if (typeof scrollbar != 'undefined') {
         scrollbar.update();
+    }
+}
+
+function game2() {
+    $("#item-1").fadeOut(500, function () {
+        goUp();
+        $("#item-2").fadeIn(500, function () {
+            scrollbarUpdate();
+        });
     });
 }
 
 function game3() {
-    $("#item-2").fadeOut(500);
-    scrollbar.scrollTo(0, 0, 600);
-    $("#item-3").fadeIn(500, function () {
-        scrollbar.update();
+    $("#item-2").fadeOut(500, function () {
+        goUp();
+        $("#item-3").fadeIn(500, function () {
+            scrollbarUpdate();
+        });
+
+        for (i = 1; i < 9; i++) {
+            tangram($('.draggable-' + i), $('.droppable-' + i));
+        }
     });
 
-    for (i = 1; i < 9; i++) {
-        tangram($('.draggable-' + i), $('.droppable-' + i));
-    }
 }
 
 function game4() {
-    $("#item-3").fadeOut(500);
-    scrollbar.scrollTo(0, 0, 600);
-    $("#item-4").fadeIn(500, function () {
-        scrollbar.update();
+    $("#item-3").fadeOut(500, function () {
+        goUp();
+        $("#item-4").fadeIn(500, function () {
+            scrollbarUpdate();
+        });
     });
 }
 
 
 /*--------------------------------------------------
-Tangram
+Split Text
 --------------------------------------------------*/
-function tangram(drag, drop) {
-    var $drag = drag,
-        $drop = drop,
-        startX = $drag.offset().left,
-        startY = $drag.offset().top,
-        endX = $drop.offset().left,
-        endY = $drop.offset().top,
-        diffX = endX - startX,
-        diffY = endY - startY;
+function splitText() {
+    $('.rules li span').each(function () {
+        var $t = $(this),
+            text = $t.text(),
+            word = text.split(' ');
 
-    Draggable.create($drag, {
-        bounds: '.tangram',
-        onDragStart: function () {
-            var $t = $(this.target);
-            $t.addClass('dragging');
-            TweenLite.to($t, 0.5, {
-                scale: 1.2,
-                ease: Power2.easeInOut
+        $t.text('').addClass('splitted-phrase');
+
+        $.each(word, function (i, val) {
+            $('<span class="splitted-word"></span>').appendTo($t);
+            letter = val.split('');
+            $.each(letter, function (j, v) {
+                $('<span class="splitted-letter">' + v + '</span>').appendTo($('.splitted-word:last'), $t);
             });
-        },
-        onDragEnd: function () {
-            var $t = $(this.target);
-            $t.removeClass('dragging');
-            if (this.hitTest($drop)) {
-                TweenLite.to($t, 0.5, {
-                    x: diffX,
-                    y: diffY,
-                    scale: 2,
-                    ease: Power2.easeInOut
-                });
-            } else {
-                TweenLite.to($t, 0.5, {
-                    x: 0,
-                    y: 0,
-                    scale: 1,
-                    ease: Power2.easeInOut
-                });
-            }
-        },
-    })
+            $('<span class="splitted-word"><span class="splitted-letter">&nbsp;</span></span>').appendTo($t);
+        });
+    });
 }
 
 
@@ -159,15 +190,13 @@ Doc Ready
 --------------------------------------------------*/
 $(function () {
     scrollbarInit();
+    getSpeed();
+
+    // splitText();
 });
 
 
 /*--------------------------------------------------
 Win Load
 --------------------------------------------------*/
-$(window).on('load', function () {
-    /* tangram($('.draggable-1'), $('.droppable-1'));
-    tangram($('.draggable-2'), $('.droppable-2'));
-    tangram($('.draggable-3'), $('.droppable-3'));
-    tangram($('.draggable-4'), $('.droppable-4')); */
-})
+$(window).on('load', function () {})

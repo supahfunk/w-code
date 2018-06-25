@@ -200,7 +200,7 @@ function gameInit1() {
     function checkSolution() {
         if ($('#drop img', $g).length == 3) {
             end = true;
-            setTimeout(game2, 1000);
+            setTimeout(game2, 500);
         } else {
             end = false;
         }

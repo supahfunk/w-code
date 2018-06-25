@@ -295,6 +295,14 @@
         </svg>
         <!-- /SVG SPRITE -->
 
+        <script>
+            window.addEventListener('load', function () {
+                for (i = 1; i < 9; i++) {
+                    tangram($('.draggable-' + i), $('.droppable-' + i));
+                }
+            })
+        </script>
+
 </body>
 
 </html>

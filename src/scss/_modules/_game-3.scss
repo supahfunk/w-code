@@ -15,6 +15,28 @@ Game 3
     overflow: hidden;
     position: relative;
     z-index: 1;
+    max-width: 100vw;
+    @include xl {
+        padding: 0;
+        transform: scale(.8) translateX(-7%);
+    }
+    @include lg {
+        transform: scale(.6) translateX(-25%);
+    }
+    @include md {
+        transform: scale(.85) translateX(-5%);
+    }
+    @include xxs {
+        padding: 100px 50px;
+        transform-origin: 0 0;
+        transform: scale(.4);
+    }
+    @media (max-width: 320px) {
+        transform: scale(.35);
+    }
+    main {
+        padding: 100px 0;
+    }
     .tangram {
         user-select: none;
         padding: 30px;
@@ -32,14 +54,8 @@ Game 3
             z-index: 5;
             display: flex;
             justify-content: space-around;
-            width: 50vw;
-            flex-wrap: wrap;
+            width: 770px;
             padding: 30px 0;
-            @media (max-width: 700px) {
-                flex: 0 1 100%;
-                order: 1;
-                padding-top: 30px;
-            }
         }
         &-drop {
             border: 1px solid #ddd;
@@ -59,11 +75,14 @@ Game 3
         &-7 {
             z-index: -1;
         }
+        @include xxs {
+            margin: 0;
+        }
     }
     .droppable {
         position: absolute;
         z-index: 1;
-        opacity: 0;
+        opacity: .2;
         &-1 {
             top: 0;
             left: 2px;

@@ -79,7 +79,7 @@ function checkSolutionGame3() {
     $g = $('#game-3');
     if ($('.tangram .dropped').length == 8) {
         endGame3 = true;
-        setTimeout(game4, 1000);
+        setTimeout(game4, 500);
     } else {
         endGame3 = false;
     }
