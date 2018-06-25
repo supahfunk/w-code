@@ -102,7 +102,8 @@ function getSpeed() {
         speed = scrollbar.offset.y - offsetY;
         offsetY = scrollbar.offset.y;
         $skewers.css({
-            transform: 'skewY(' + speed * 0.1 + 'deg)'
+            transform: 'skewY(' + speed * 0.15 + 'deg)'
+            // transform: 'scale(' + (1 - (speed * 0.001)) + ')'
         });
         window.requestAnimationFrame(getSpeed);
     }

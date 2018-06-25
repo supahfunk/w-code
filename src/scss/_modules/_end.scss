@@ -1,0 +1,45 @@
+@import 'variables';
+@import 'mixins';
+/*--------------------------------------------------
+End
+--------------------------------------------------*/
+
+.end {
+    display: block !important;
+    text-align: center;
+    padding: 100px 60px;
+    min-height: var(--app-height);
+    background: #fff;
+    height: auto;
+    width: 100vw;
+    position: relative;
+    z-index: 3;
+    @include xs {
+        padding: 60px 40px;
+    }
+    .end-logo {
+        text-align: center;
+        margin-bottom: 50px;
+        img {
+            margin: 0 auto;
+        }
+    }
+    .end-logos {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        div {
+            width: 200px;
+            @include sm {
+                flex: 0 0 50%;
+                width: 50%;
+            }
+            padding: 10px 20px;
+            img {
+                margin: 0 auto;
+            }
+        }
+    }
+}

@@ -16,9 +16,13 @@ Game 3
     position: relative;
     z-index: 1;
     max-width: 100vw;
+    @include md {
+        height: var(--app-height);
+    }
     main {
         padding: 100px 0;
         transform-origin: 0 0;
+        min-height: var(--app-height);
         @include xl {
             transform: scale(.8);
         }

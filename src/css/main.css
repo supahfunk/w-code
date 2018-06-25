@@ -366,6 +366,14 @@ Base
 :root {
   --app-height: 100%; }
 
+::-moz-selection {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff; }
+
+::selection {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff; }
+
 body {
   font-family: 'Karla', sans-serif;
   background: #181617;
@@ -415,7 +423,8 @@ body {
     display: flex;
     color: #000;
     position: relative;
-    z-index: 3; }
+    z-index: 3;
+    min-height: var(--app-height); }
     .wrapper .game-area .game {
       position: relative;
       z-index: 1;
@@ -450,16 +459,6 @@ body {
       width: 16.6666%; }
       .wrapper .grid span:last-child() {
         border-right: none; }
-  .wrapper .end {
-    height: var(--app-height);
-    width: 100vw;
-    background: #fff;
-    display: flex;
-    color: #000;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 3; }
 
 h1 {
   font-size: 80px;
@@ -481,9 +480,11 @@ h1 {
 canvas {
   position: absolute;
   top: 0;
+  left: 0;
   pointer-events: none;
   z-index: -1;
-  opacity: .5; }
+  width: 100%;
+  height: var(--app-height); }
 
 /*--------------------------------------------------
 Typography
@@ -1614,10 +1615,14 @@ Game 3
   position: relative;
   z-index: 1;
   max-width: 100vw; }
+  @media (max-width: 1199px) {
+    #game-3 {
+      height: var(--app-height); } }
   #game-3 main {
     padding: 100px 0;
     -webkit-transform-origin: 0 0;
-            transform-origin: 0 0; }
+            transform-origin: 0 0;
+    min-height: var(--app-height); }
     @media (max-width: 1560px) {
       #game-3 main {
         -webkit-transform: scale(0.8);
@@ -1720,3 +1725,40 @@ Game 3
   #game-3 .dragging {
     cursor: -webkit-grabbing !important;
     cursor: grabbing !important; }
+
+/*--------------------------------------------------
+End
+--------------------------------------------------*/
+.end {
+  display: block !important;
+  text-align: center;
+  padding: 100px 60px;
+  min-height: var(--app-height);
+  background: #fff;
+  height: auto;
+  width: 100vw;
+  position: relative;
+  z-index: 3; }
+  @media (max-width: 767px) {
+    .end {
+      padding: 60px 40px; } }
+  .end .end-logo {
+    text-align: center;
+    margin-bottom: 50px; }
+    .end .end-logo img {
+      margin: 0 auto; }
+  .end .end-logos {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; }
+    .end .end-logos div {
+      width: 200px;
+      padding: 10px 20px; }
+      @media (max-width: 991px) {
+        .end .end-logos div {
+          flex: 0 0 50%;
+          width: 50%; } }
+      .end .end-logos div img {
+        margin: 0 auto; }
