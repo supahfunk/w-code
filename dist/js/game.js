@@ -471,8 +471,12 @@ function tangram(drag, drop) {
         startY = $drag.offset().top,
         endX = $drop.offset().left,
         endY = $drop.offset().top,
-        diffX = endX - startX,
-        diffY = endY - startY;
+        $main = $('main', $g),
+        scale = $main[0].getBoundingClientRect().width / $main[0].offsetWidth,
+        diffX = (endX - startX) / scale,
+        diffY = (endY - startY) / scale;
+
+    console.log(scale);
 
     Draggable.create($drag, {
         bounds: $g,

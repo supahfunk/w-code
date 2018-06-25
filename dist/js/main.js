@@ -132,7 +132,7 @@ function scrollbarUpdate() {
 function game2() {
     $("#item-1").fadeOut(500, function () {
         goUp();
-        $("#item-2").fadeIn(500, function () {
+        $("#item-2").fadeIn(800, function () {
             scrollbarUpdate();
         });
     });
@@ -141,7 +141,7 @@ function game2() {
 function game3() {
     $("#item-2").fadeOut(500, function () {
         goUp();
-        $("#item-3").fadeIn(500, function () {
+        $("#item-3").fadeIn(800, function () {
             scrollbarUpdate();
         });
 
@@ -155,7 +155,7 @@ function game3() {
 function game4() {
     $("#item-3").fadeOut(500, function () {
         goUp();
-        $("#item-4").fadeIn(500, function () {
+        $("#item-4").fadeIn(800, function () {
             scrollbarUpdate();
         });
     });

@@ -16,26 +16,30 @@ Game 3
     position: relative;
     z-index: 1;
     max-width: 100vw;
-    @include xl {
-        padding: 0;
-        transform: scale(.8) translateX(-7%);
-    }
-    @include lg {
-        transform: scale(.6) translateX(-25%);
-    }
-    @include md {
-        transform: scale(.85) translateX(-5%);
-    }
-    @include xxs {
-        padding: 100px 50px;
-        transform-origin: 0 0;
-        transform: scale(.4);
-    }
-    @media (max-width: 320px) {
-        transform: scale(.35);
-    }
     main {
         padding: 100px 0;
+        transform-origin: 0 0;
+        @include xl {
+            transform: scale(.8);
+        }
+        @include lg {
+            transform: scale(.7);
+        }
+        @include md {
+            transform: scale(1);
+        }
+        @include sm {
+            transform: scale(.8) translate(10%);
+        }
+        @include xs {
+            transform: scale(.7) translate(20%);
+        }
+        @include xxs {
+            transform: scale(.4) translate(75%);
+        }
+        @media (max-width: 320px) {
+            transform: scale(.35) translate(95%);
+        }
     }
     .tangram {
         user-select: none;
@@ -47,6 +51,7 @@ Game 3
             stroke-linejoin: round;
             stroke-miterlimit: 10;
             stroke-width: 8px;
+            transform-origin: 0 0;
         }
         &-drag-top,
         &-drag-bottom {
@@ -82,7 +87,7 @@ Game 3
     .droppable {
         position: absolute;
         z-index: 1;
-        opacity: .2;
+        opacity: 0;
         &-1 {
             top: 0;
             left: 2px;
