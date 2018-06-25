@@ -255,8 +255,6 @@ function gameInit2() {
         gutter = 50,
         $hint = $('.hint img', $g);
 
-    console.log($hint.length);
-
     tiles.each(function (i, tile) {
         tile = $(tile);
         tile.data({
@@ -482,7 +480,7 @@ function gameInit2() {
     }
 
     $hint.on('click', function () {
-        console.log('ok');
+
         $gameHint = $('.game-hint', $g);
         TweenMax.fromTo($gameHint, .5, {
             y: 0,

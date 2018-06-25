@@ -1474,7 +1474,8 @@ Game 1
       z-index: -1;
       top: 148px;
       left: -23px;
-      pointer-events: none; }
+      pointer-events: none;
+      opacity: 0; }
     #game-1 main .cols {
       position: absolute;
       z-index: 1;
