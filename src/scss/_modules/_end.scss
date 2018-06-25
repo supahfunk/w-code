@@ -14,6 +14,8 @@ End
     width: 100vw;
     position: relative;
     z-index: 3;
+    margin-top: -100px;
+    margin-bottom: -100px;
     @include xs {
         padding: 40px 0;
     }

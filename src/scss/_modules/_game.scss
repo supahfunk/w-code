@@ -29,7 +29,16 @@ Game Area
         font-weight: bold;
         transition: transform .5s $smooth;
         &.active {
-            transform: translateX(0);
+            transform: translate(0);
+        }
+        @include md {
+            width: 100%;
+            left: 0;
+            top: 0;
+            transform: translate(0, 100%);
+            z-index: 10;
+            background: #181617;
+            color: #fff;
         }
     }
     .game {
