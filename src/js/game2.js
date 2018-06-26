@@ -9,6 +9,8 @@ function gameInit2() {
         width = 110,
         margin = 0,
         gutter = 50,
+        $main = $('main', $g),
+        scale = $main[0].getBoundingClientRect().width / $main[0].offsetWidth,
         $hint = $('.hint img', $g);
 
     tiles.each(function (i, tile) {
@@ -132,8 +134,8 @@ function gameInit2() {
 
         // Update tile with new coords
         TweenLite.set(tile, {
-            x: rect1.left - rect2.left,
-            y: rect1.top - rect2.top
+            x: (rect1.left - rect2.left) / scale,
+            y: (rect1.top - rect2.top) / scale
         });
     }
 
@@ -270,5 +272,7 @@ function gameInit2() {
 Doc Ready
 --------------------------------------------------*/
 $(function () {
-    gameInit2();
+    if ($('#game-2').length) {
+        gameInit2();
+    }
 });

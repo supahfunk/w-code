@@ -35,10 +35,9 @@ Game Area
             width: 100%;
             left: 0;
             top: 0;
-            transform: translate(0, 100%);
-            z-index: 10;
             background: #181617;
             color: #fff;
+            z-index: 10;
         }
     }
     .game {
@@ -62,9 +61,13 @@ Game Area
         img {
             width: 20px;
             height: 20px;
+            @include xs {
+                width: 16px;
+                height: 16px;
+            }
         }
         @include xs {
-            right: 0;
+            right: 2px;
         }
         div {
             position: absolute;

@@ -7,15 +7,16 @@ End
 .end {
     display: block !important;
     text-align: center;
-    padding: 10px 0 100px;
+    padding: 10px 0 0;
     min-height: var(--app-height);
     background: #fff;
     height: auto;
     width: 100vw;
     position: relative;
     z-index: 3;
-    margin-top: -100px;
-    margin-bottom: -100px;
+    transform: translateY(-10vh);
+    margin-bottom: -40vh;
+    padding-bottom: 100px;
     @include xs {
         padding: 40px 0;
     }
