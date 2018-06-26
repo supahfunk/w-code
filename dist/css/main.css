@@ -624,7 +624,7 @@ Intro
 Rules
 --------------------------------------------------*/
 .rules {
-  padding: 100px 60px; }
+  padding: 100px 92px; }
   @media (max-width: 767px) {
     .rules {
       padding: 60px 40px; } }
@@ -1326,7 +1326,7 @@ Rules
             display: block; } }
 
 .rules-resume {
-  padding: 60px 60px;
+  padding: 60px 92px;
   flex: 0 0 50%;
   color: #fff;
   text-align: left;
