@@ -385,14 +385,21 @@ body {
   body.scroll {
     height: auto;
     overflow-y: auto;
-    min-height: 0; }
+    overflow-x: hidden;
+    width: 100vw;
+    min-height: 0;
+    position: static; }
     body.scroll .wrapper {
+      width: 100vw;
       height: auto;
       overflow: auto;
+      overflow-x: hidden;
       min-height: 0; }
       body.scroll .wrapper .item {
-        height: 100vh;
+        width: 100vw;
+        min-height: 100vh;
         overflow: auto;
+        overflow-x: hidden;
         min-height: 0; }
 
 .wrapper {
@@ -467,6 +474,9 @@ canvas {
   width: 100%;
   height: var(--app-height); }
 
+.svg-sprite {
+  display: none; }
+
 /*--------------------------------------------------
 Typography
 --------------------------------------------------*/
@@ -528,6 +538,9 @@ Intro
   position: relative;
   z-index: 10;
   margin-bottom: 200px; }
+  @media (max-width: 767px) {
+    .intro {
+      margin-bottom: 50px; } }
   @media (max-width: 1199px) {
     .intro .rules-svg {
       -webkit-transform: scale(0.8);
@@ -1826,19 +1839,18 @@ End
   width: 100vw;
   position: relative;
   z-index: 3;
-  -webkit-transform: translateY(-10vh);
-          transform: translateY(-10vh);
-  margin-bottom: -40vh;
   padding-bottom: 100px; }
   @media (max-width: 767px) {
     .end {
       padding: 40px 0; } }
   .end canvas {
+    margin-top: -10vh;
     position: absolute; }
     @media (max-width: 575px) {
       .end canvas {
-        margin-top: 8vh; } }
+        margin-top: -9vh; } }
   .end .end-logo {
+    margin-top: -10vh;
     text-align: center;
     margin-bottom: 50px;
     height: 100vh;
@@ -1849,6 +1861,9 @@ End
     @media (max-height: 480px) {
       .end .end-logo {
         margin-bottom: 40px; } }
+    @media (max-width: 575px) {
+      .end .end-logo {
+        margin-top: -13vh; } }
     .end .end-logo img {
       margin: 0 auto; }
   .end .end-logos {

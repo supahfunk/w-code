@@ -135,6 +135,7 @@ function game2() {
         goUp();
         $("#item-2").fadeIn(800, function () {
             scrollbarUpdate();
+            gameInit2();
         });
     });
 }
