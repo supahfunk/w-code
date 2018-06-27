@@ -5906,7 +5906,7 @@ class Point {
     set acceleration(value) {
         if (typeof value == 'number') {
             this._acceleration = value;
-            this.speed += this._acceleration * 0.5;
+            this.speed += this._acceleration * 0.1;
         }
     }
     get acceleration() {
