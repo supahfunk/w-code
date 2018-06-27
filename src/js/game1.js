@@ -203,10 +203,12 @@ function gameInit1() {
     function checkSolution() {
         if ($('#drop img', $g).length == 3) {
             end = true;
+            drawBlob('well-done-1', 600, 600, 200, '#141414');
+
             setTimeout(function () {
                 $('#item-1 .well-done').addClass('active');
             }, 500);
-            setTimeout(game2, 2500);
+            setTimeout(game2, 3500);
         } else {
             end = false;
         }

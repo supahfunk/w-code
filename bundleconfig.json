@@ -7,7 +7,8 @@
             "src/js/vendor/TweenMax.min.js",
             "src/js/vendor/Draggable.min.js",
             "src/js/vendor/CSSPlugin.min.js",
-            "src/js/vendor/blob2.js"
+            "src/js/vendor/pep.js",
+            "src/js/vendor/blob.js"
         ],
         "outputFileName": "dist/js/vendors.js",
         "minify": {

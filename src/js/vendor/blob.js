@@ -1,578 +1,315 @@
-var Vector2 = function (x, y) {
+var animationFrame;
 
-    this.x = x || 0;
-    this.y = y || 0;
-
-};
-
-Vector2.prototype = {
-
-    reset: function (x, y) {
-
-        this.x = x;
-        this.y = y;
-
-        return this;
-
-    },
-
-    toString: function (decPlaces) {
-        decPlaces = decPlaces || 3;
-        var scalar = Math.pow(10, decPlaces);
-        return "[" + Math.round(this.x * scalar) / scalar + ", " + Math.round(this.y * scalar) / scalar + "]";
-    },
-
-    clone: function () {
-        return new Vector2(this.x, this.y);
-    },
-
-    copyTo: function (v) {
-        v.x = this.x;
-        v.y = this.y;
-    },
-
-    copyFrom: function (v) {
-        this.x = v.x;
-        this.y = v.y;
-    },
-
-    magnitude: function () {
-        return Math.sqrt((this.x * this.x) + (this.y * this.y));
-    },
-
-    magnitudeSquared: function () {
-        return (this.x * this.x) + (this.y * this.y);
-    },
-
-    normalise: function () {
-
-        var m = this.magnitude();
-
-        this.x = this.x / m;
-        this.y = this.y / m;
-
-        return this;
-    },
-
-    reverse: function () {
-        this.x = -this.x;
-        this.y = -this.y;
-
-        return this;
-    },
-
-    plusEq: function (v) {
-        this.x += v.x;
-        this.y += v.y;
-
-        return this;
-    },
-
-    plusNew: function (v) {
-        return new Vector2(this.x + v.x, this.y + v.y);
-    },
-
-    minusEq: function (v) {
-        this.x -= v.x;
-        this.y -= v.y;
-
-        return this;
-    },
-
-    minusNew: function (v) {
-        return new Vector2(this.x - v.x, this.y - v.y);
-    },
-
-    multiplyEq: function (scalar) {
-        this.x *= scalar;
-        this.y *= scalar;
-
-        return this;
-    },
-
-    multiplyNew: function (scalar) {
-        var returnvec = this.clone();
-        return returnvec.multiplyEq(scalar);
-    },
-
-    divideEq: function (scalar) {
-        this.x /= scalar;
-        this.y /= scalar;
-        return this;
-    },
-
-    divideNew: function (scalar) {
-        var returnvec = this.clone();
-        return returnvec.divideEq(scalar);
-    },
-
-    dot: function (v) {
-        return (this.x * v.x) + (this.y * v.y);
-    },
-
-    angle: function (useRadians) {
-
-        return Math.atan2(this.y, this.x) * (useRadians ? 1 : Vector2Const.TO_DEGREES);
-
-    },
-
-    rotate: function (angle, useRadians) {
-
-        var cosRY = Math.cos(angle * (useRadians ? 1 : Vector2Const.TO_RADIANS));
-        var sinRY = Math.sin(angle * (useRadians ? 1 : Vector2Const.TO_RADIANS));
-
-        Vector2Const.temp.copyFrom(this);
-
-        this.x = (Vector2Const.temp.x * cosRY) - (Vector2Const.temp.y * sinRY);
-        this.y = (Vector2Const.temp.x * sinRY) + (Vector2Const.temp.y * cosRY);
-
-        return this;
-    },
-
-    equals: function (v) {
-        return ((this.x == v.x) && (this.y == v.y));
-    },
-
-    isCloseTo: function (v, tolerance) {
-        if (this.equals(v)) return true;
-
-        Vector2Const.temp.copyFrom(this);
-        Vector2Const.temp.minusEq(v);
-
-        return (Vector2Const.temp.magnitudeSquared() < tolerance * tolerance);
-    },
-
-    rotateAroundPoint: function (point, angle, useRadians) {
-        Vector2Const.temp.copyFrom(this);
-        Vector2Const.temp.minusEq(point);
-        Vector2Const.temp.rotate(angle, useRadians);
-        Vector2Const.temp.plusEq(point);
-        this.copyFrom(Vector2Const.temp);
-    },
-
-    isMagLessThan: function (distance) {
-        return (this.magnitudeSquared() < distance * distance);
-    },
-
-    isMagGreaterThan: function (distance) {
-        return (this.magnitudeSquared() > distance * distance);
+class Blob {
+    constructor() {
+        this.points = [];
     }
 
-
-    // still to fix : 
-    // public function projectOnto(v:Vector2) : Vector2
-    // {
-    // 		var dp:Number = dot(v);
-    // 
-    // 		var f:Number = dp / ( v.x*v.x + v.y*v.y );
-    // 
-    // 		return new Vector2( f*v.x , f*v.y);
-    // 	}
-    // 
-    // 
-    // public function convertToNormal():void
-    // {
-    // 	var tempx:Number = x; 
-    // 	x = -y; 
-    // 	y = tempx; 
-    // 	
-    // 	
-    // }		
-    // public function getNormal():Vector2
-    // {
-    // 	
-    // 	return new Vector2(-y,x); 
-    // 	
-    // }
-    // 
-    // 
-    // 
-    // public function getClosestPointOnLine ( vectorposition : Point, targetpoint : Point ) : Point
-    // {
-    // 	var m1 : Number = y / x ;
-    // 	var m2 : Number = x / -y ;
-    // 	
-    // 	var b1 : Number = vectorposition.y - ( m1 * vectorposition.x ) ;
-    // 	var b2 : Number = targetpoint.y - ( m2 * targetpoint.x ) ;
-    // 	
-    // 	var cx : Number = ( b2 - b1 ) / ( m1 - m2 ) ;
-    // 	var cy : Number = m1 * cx + b1 ;
-    // 	
-    // 	return new Point ( cx, cy ) ;
-    // }
-    // 
-
-};
-
-Vector2Const = {
-    TO_DEGREES: 180 / Math.PI,
-    TO_RADIANS: Math.PI / 180,
-    temp: new Vector2()
-};
-
-
-
-// canvas augmentation!
-
-var p = CanvasRenderingContext2D.prototype;
-p.circle = function (x, y, radius) {
-    this.beginPath();
-    this.arc(x, y, radius, 0, Math.PI * 2, true);
-};
-p.fillCircle = function (x, y, radius) {
-    this.circle(x, y, radius);
-    this.fill();
-    this.beginPath();
-};
-p.strokeCircle = function (x, y, radius) {
-    this.circle(x, y, radius);
-    this.stroke();
-    this.beginPath();
-};
-p.ellipse = function (x, y, width, height) {
-    this.beginPath();
-    for (var i = 0; i < Math.PI * 2; i += Math.PI / 16) {
-        this.lineTo(x + (Math.cos(i) * width / 2), y + (Math.sin(i) * height / 2));
-
+    init() {
+        for (let i = 0; i < this.numPoints; i++) {
+            let point = new Point(this.divisional * (i + 1), this);
+            // point.acceleration = -1 + Math.random() * 2;
+            this.push(point);
+        }
     }
-    this.closePath();
-};
-p.fillEllipse = function (x, y, width, height) {
-    this.ellipse(x, y, width, height);
-    this.fill();
-    this.beginPath();
-};
-p.strokeEllipse = function (x, y, width, height) {
-    this.ellipse(x, y, width, height);
-    this.stroke();
-    this.beginPath();
-};
 
-p.line = function (x1, y1, x2, y2) {
-    this.beginPath();
-    this.moveTo(x1, y1);
-    this.lineTo(x2, y2);
-    this.stroke();
-    this.beginPath();
-};
+    render() {
+        let canvas = this.canvas;
+        let ctx = this.ctx;
+        let position = this.position;
+        let pointsArray = this.points;
+        let radius = this.radius;
+        let points = this.numPoints;
+        let divisional = this.divisional;
+        let center = this.center;
 
-function radians(deg) {
-    return deg * Math.PI / 180;
-};
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-function degrees(rad) {
-    return rad * 180 / Math.PI;
-};
+        pointsArray[0].solveWith(pointsArray[points - 1], pointsArray[1]);
 
-function rgb(r, g, b) {
-    return 'rgb(' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(g), 0, 255) + ', ' + clamp(Math.round(b), 0, 255) + ')';
-};
+        let p0 = pointsArray[points - 1].position;
+        let p1 = pointsArray[0].position;
+        let _p2 = p1;
 
-function rgba(r, g, b, a) {
-    return 'rgba(' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(g), 0, 255) + ', ' + clamp(Math.round(b), 0, 255) + ', ' + clamp(a, 0, 1) + ')';
-};
+        ctx.beginPath();
+        ctx.moveTo(center.x, center.y);
+        ctx.moveTo((p0.x + p1.x) / 2, (p0.y + p1.y) / 2);
 
-function hsl(h, s, l) {
-    return 'hsl(' + h + ', ' + clamp(s, 0, 100) + '%, ' + clamp(l, 0, 100) + '%)';
-};
+        for (let i = 1; i < points; i++) {
 
-function hsla(h, s, l, a) {
-    return 'hsla(' + h + ', ' + clamp(s, 0, 100) + '%, ' + clamp(l, 0, 100) + '%, ' + clamp(a, 0, 1) + ')';
-};
+            pointsArray[i].solveWith(pointsArray[i - 1], pointsArray[i + 1] || pointsArray[0]);
 
-function randomInteger(min, max) {
-    if (max === undefined) {
-        max = min;
-        min = 0;
+            let p2 = pointsArray[i].position;
+            var xc = (p1.x + p2.x) / 2;
+            var yc = (p1.y + p2.y) / 2;
+            ctx.quadraticCurveTo(p1.x, p1.y, xc, yc);
+
+            ctx.fillStyle = '#000000';
+
+            p1 = p2;
+        }
+
+        var xc = (p1.x + _p2.x) / 2;
+        var yc = (p1.y + _p2.y) / 2;
+        ctx.quadraticCurveTo(p1.x, p1.y, xc, yc + 1);
+        // ctx.lineTo(_p2.x, _p2.y);
+
+        // ctx.closePath();
+        ctx.fillStyle = this.color;
+        //ctx.fill();
+        ctx.lineWidth = 8;
+        ctx.strokeStyle = this.strokeStyle;
+        ctx.stroke();
+
+        requestAnimationFrame(this.render.bind(this));
     }
-    return Math.floor(Math.random() * (max + 1 - min)) + min;
+
+    push(item) {
+        if (item instanceof Point) {
+            this.points.push(item);
+        }
+    }
+
+    set color(value) {
+        this._color = value;
+    }
+    get color() {
+        return this._color || '#000000';
+    }
+
+    set canvas(value) {
+        if (value instanceof HTMLElement && value.tagName.toLowerCase() === 'canvas') {
+            this._canvas = canvas;
+            this.ctx = this._canvas.getContext('2d');
+        }
+    }
+    get canvas() {
+        return this._canvas;
+    }
+
+    set numPoints(value) {
+        if (value > 2) {
+            this._points = value;
+        }
+    }
+    get numPoints() {
+        return this._points || 32;
+    }
+
+    set radius(value) {
+        if (value > 0) {
+            this._radius = value;
+        }
+    }
+    get radius() {
+        return this._radius || 150;
+    }
+
+    set position(value) {
+        if (typeof value == 'object' && value.x && value.y) {
+            this._position = value;
+        }
+    }
+    get position() {
+        return this._position || {
+            x: 0.5,
+            y: 0.5
+        };
+    }
+
+    get divisional() {
+        return Math.PI * 2 / this.numPoints;
+    }
+
+    get center() {
+        return {
+            x: this.canvas.width * this.position.x,
+            y: this.canvas.height * this.position.y
+        };
+    }
+
+    set running(value) {
+        this._running = value === true;
+    }
+    get running() {
+        return this.running !== false;
+    }
 }
 
-function random(min, max) {
-    if (min === undefined) {
-        min = 0;
-        max = 1;
-    } else if (max === undefined) {
-        max = min;
-        min = 0;
-    }
-    return (Math.random() * (max - min)) + min;
-};
-
-function map(value, min1, max1, min2, max2, clampResult) {
-    var returnvalue = ((value - min1) / (max1 - min1) * (max2 - min2)) + min2;
-    if (clampResult) return clamp(returnvalue, min2, max2);
-    else return returnvalue;
-};
-
-function clamp(value, min, max) {
-    if (max < min) {
-        var temp = min;
-        min = max;
-        max = temp;
-
-    }
-    return Math.max(min, Math.min(value, max));
-};
-
-function dist(x1, y1, x2, y2) {
-    x2 -= x1;
-    y2 -= y1;
-    return Math.sqrt((x2 * x2) + (y2 * y2));
-}
-
-var mouseX = 0,
-    mouseY = 0,
-    lastMouseX = 0,
-    lastMouseY = 0,
-    frameRate = 60,
-    lastUpdate = Date.now(),
-    mouseDown = false;
-
-function cjsloop() {
-
-    var now = Date.now();
-    var elapsedMils = now - lastUpdate;
-
-
-    if ((typeof window.draw == 'function') && (elapsedMils >= (1000 / window.frameRate))) {
-        window.draw();
-
-        lastUpdate = now - elapsedMils % (1000 / window.frameRate);
-        lastMouseX = mouseX;
-        lastMouseY = mouseY;
-    }
-
-    requestAnimationFrame(cjsloop);
-
-};
-
-
-
-
-// requestAnimationFrame 
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-
-// requestAnimationFrame polyfill by Erik MÃ¶ller
-// fixes from Paul Irish and Tino Zijdel
-
-(function () {
-    var lastTime = 0;
-    var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
-            window[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
-
-    if (!window.requestAnimationFrame)
-        window.requestAnimationFrame = function (callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function () {
-                    callback(currTime + timeToCall);
-                },
-                timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
+class Point {
+    constructor(azimuth, parent) {
+        this.parent = parent;
+        this.azimuth = Math.PI - azimuth;
+        this._components = {
+            x: Math.cos(this.azimuth),
+            y: Math.sin(this.azimuth)
         };
 
-    if (!window.cancelAnimationFrame)
-        window.cancelAnimationFrame = function (id) {
-            clearTimeout(id);
-        };
-}());
+        this.acceleration = -0.3 + Math.random() * 0.6;
+    }
 
+    solveWith(leftPoint, rightPoint) {
+        this.acceleration = (-0.3 * this.radialEffect + (leftPoint.radialEffect - this.radialEffect) + (rightPoint.radialEffect - this.radialEffect)) * this.elasticity - this.speed * this.friction;
+    }
 
-window.addEventListener('load', init);
+    set acceleration(value) {
+        if (typeof value == 'number') {
+            this._acceleration = value;
+            this.speed += this._acceleration * 0.5;
+        }
+    }
+    get acceleration() {
+        return this._acceleration || 0;
+    }
 
-function init() {
+    set speed(value) {
+        if (typeof value == 'number') {
+            this._speed = value;
+            this.radialEffect += this._speed * 5;
+        }
+    }
+    get speed() {
+        return this._speed || 0;
+    }
 
-    window.addEventListener('mousemove', function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
+    set radialEffect(value) {
+        if (typeof value == 'number') {
+            this._radialEffect = value; //Math.min(Math.max(value, -20), 20);
+        }
+    }
+    get radialEffect() {
+        return this._radialEffect || 0;
+    }
 
-    window.addEventListener('mousedown', function (e) {
-        mouseDown = true;
-        if (typeof onMouseDown == 'function') onMouseDown();
-    });
-    window.addEventListener('mouseup', function (e) {
-        mouseDown = false;
-        if (typeof onMouseUp == 'function') onMouseUp();
-    });
-    window.addEventListener('keydown', function (e) {
-        if (typeof onKeyDown == 'function') onKeyDown(e);
-    });
-    window.addEventListener('keyup', function (e) {
-        if (typeof onKeyUp == 'function') onKeyUp(e);
-    });
+    get position() {
+        return {
+            x: this.parent.center.x + this.components.x * (this.parent.radius + this.radialEffect),
+            y: this.parent.center.y + this.components.y * (this.parent.radius + this.radialEffect)
+        }
+    }
 
-    if (typeof window.setup == 'function') window.setup();
-    cjsloop();
+    get components() {
+        return this._components;
+    }
 
-
-
-}
-
-var canvas,
-    c;
-var dots = [];
-var dot_count = 40;
-var dot_radius = 2;
-var dot_stroke_color = hsla(0, 50, 100, 0.8);
-var dot_stroke_weight = 5;
-var dot_speed = 3;
-var dot_speed_max = 4;
-var dot_speed_min = 1;
-var dot_turn = 2;
-var dot_gravity = 0.000;
-var dot_avoidance_distance = 70;
-var dot_avoidance_strength = 0.6;
-
-var screenWidth = window.innerWidth;
-var screenHeight = window.innerHeight;
-var screenMin = (screenWidth < screenHeight) ? screenWidth : screenHeight;
-
-
-
-img = new Image();
-img.src = 'https://raw.githubusercontent.com/supahfunk/supah-codepen/master/blob-desaturate.png';
-
-
-function setup() {
-    frameRate = 30;
-    setupCanvas();
-    makeDots(dot_count);
-}
-
-function makeDots(count) {
-    for (var i = 0; i < count; i++) {
-        var r = randomInteger(0, screenMin * 0.4);
-        var d = randomInteger(0, 360);
-        dots.push(new Dot(r, d, i));
+    set elasticity(value) {
+        if (typeof value === 'number') {
+            this._elasticity = value;
+        }
+    }
+    get elasticity() {
+        return this._elasticity || 0.001;
+    }
+    set friction(value) {
+        if (typeof value === 'number') {
+            this._friction = value;
+        }
+    }
+    get friction() {
+        return this._friction || 0.0285;
     }
 }
 
-function draw() {
-    c.clearRect(-screenWidth / 2, -screenHeight / 2, screenWidth, screenHeight);
-
-    c.strokeStyle = dot_stroke_color;
-    c.lineWidth = dot_stroke_weight;
-    for (var i = 0; i < dots.length; i++) {
-        var dot = dots[i];
-        dot.update(canvas);
-        dot.draw(c);
-    }
-}
-
-function setupCanvas() {
-
+/*--------------------------------------------------
+Blob
+--------------------------------------------------*/
+function drawBlob(place, width, height, radius, strokeColor) {
+    blob = '';
+    blob = new Blob(place);
+    blob.radius = radius || 200;
+    blob.strokeStyle = strokeColor || '#141414';
+    blob.friction = 1.00285;
     canvas = document.createElement('canvas');
-    c = canvas.getContext('2d');
-    canvas.width = screenWidth;
-    canvas.height = screenHeight;
-    document.body.appendChild(canvas);
-    c.globalCompositeOperation = "lighter";
+    canvas.setAttribute('touch-action', 'none');
+    id = document.getElementById(place);
+    id.appendChild(canvas);
+    el = 'blob-' + place;
+    canvas.setAttribute('id', el);
 
-    c.translate(screenWidth / 2, screenHeight / 2);
-}
+    var resize = function resize() {
+        canvas.width = width || 400; // window.innerWidth;
+        canvas.height = width || 400; // window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    var oldMousePoint = {
+        x: 0,
+        y: 0
+    };
+    var hover = false;
+
+    var mouseMove = function mouseMove(e) {
+
+        var pos = {
+            x: ($('#' + el).offset().left + width / 2),
+            y: ($('#' + el).offset().top + height / 2)
+        };
+
+        var diff = {
+            x: e.clientX - pos.x,
+            y: e.clientY - pos.y
+        };
+        var dist = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+        var angle = null;
+
+        blob.mousePos = {
+            x: pos.x - e.clientX,
+            y: pos.y - e.clientY
+        };
+
+        blob.color = '#fff';
 
 
-Dot = function (r, d, index) {
+        if (dist < blob.radius && hover === false) {
+            var vector = {
+                x: e.clientX - pos.x,
+                y: e.clientY - pos.y
+            };
+            angle = Math.atan2(vector.y, vector.x);
+            hover = true;
 
-    var pos = this.pos = new Vector2(r, 0).rotate(d);
-    var vel = this.vel = new Vector2(dot_speed, 0);
-    var ang = this.ang = 180 - pos.angle();
-    var dir = this.dir = randomInteger(0, 1);
-    var index = this.index;
-
-    vel.rotate(ang);
-
-    this.update = function (canvas) {
-
-        // randomly change clockwiseness
-        if (randomInteger(0, 100) == 0) {
-            dir = (dir == 1) ? 0 : 1;
+        } else if (dist > blob.radius && hover === true) {
+            var _vector = {
+                x: e.clientX - pos.x,
+                y: e.clientY - pos.y
+            };
+            angle = Math.atan2(_vector.y, _vector.x);
+            hover = false;
         }
 
-        // rotate
-        if (dir) {
-            vel.rotate(dot_turn);
-        } else {
-            vel.rotate(-dot_turn);
-        }
+        if (typeof angle == 'number') {
 
-        // gravity
-        var change_gravity = new Vector2(pos.x * dot_gravity, pos.y * dot_gravity);
-        vel.minusEq(change_gravity);
+            var nearestPoint = null;
+            var distanceFromPoint = 100;
 
-        // dot avoidance
-        for (var i = 0; i < dots.length; i++) {
-            var adot = dots[i];
-            if (i != this.index) {
-                var delta = adot.pos.minusNew(this.pos);
-                var delta_mag = Math.sqrt((delta.x * delta.x) + (delta.y * delta.y));
-                if (delta_mag < dot_avoidance_distance) {
-                    delta.multiplyEq((dot_avoidance_distance - delta_mag) / dot_avoidance_distance * dot_avoidance_strength);
-                    pos.minusEq(delta);
+            blob.points.forEach(function (point) {
+                if (Math.abs(angle - point.azimuth) < distanceFromPoint) {
+                    // console.log(point.azimuth, angle, distanceFromPoint);
+                    nearestPoint = point;
+                    distanceFromPoint = Math.abs(angle - point.azimuth);
                 }
+            });
+
+            if (nearestPoint) {
+                var strength = {
+                    x: oldMousePoint.x - e.clientX,
+                    y: oldMousePoint.y - e.clientY
+                };
+                strength = Math.sqrt(strength.x * strength.x + strength.y * strength.y) * 10;
+                if (strength > 100) strength = 100;
+                nearestPoint.acceleration = strength / 100 * (hover ? -1 : 1);
             }
         }
 
-        // edge avoidance
-        if (pos.x > screenWidth * 0.4) {
-            vel.x += -0.3;
-        } else if (pos.x < -screenWidth * 0.4) {
-            vel.x += 0.3;
-        }
-        if (pos.y > screenHeight * 0.4) {
-            vel.y += -0.3;
-        } else if (pos.y < -screenHeight * 0.4) {
-            vel.y += 0.3;
-        }
-
-        // min and max speeds
-        var mag = Math.sqrt((vel.x * vel.x) + (vel.y * vel.y));
-        if (mag < dot_speed_min) {
-            vel.multiplyEq(dot_speed_min / mag);
-        } else if (mag > dot_speed_max) {
-            vel.multiplyEq(dot_speed_max / mag);
-        }
-
-
-        // add velocity to position
-        pos.plusEq(vel);
+        oldMousePoint.x = e.clientX;
+        oldMousePoint.y = e.clientY;
     };
-
-    this.draw = function (c) {
-
-
-        // save the current canvas state
-        c.save();
-
-        // move to where the particle should be
-        c.translate(pos.x, pos.y);
-
-        // scale it dependent on the size of the particle
-        var s = 0.8;
-        c.scale(s, s);
-
-        //c.rotate(ang);
-        // move the draw position to the center of the image
-        c.translate(img.width * -0.5, img.width * -0.5);
-
-        // set the composition mode
-        c.globalCompositeOperation = this.compositeOperation;
-
-        // and draw it! 
-        c.drawImage(img, 0, 0);
-
-        // and restore the canvas state
-        c.restore();
+    // window.addEventListener('mousemove', mouseMove);
+    window.addEventListener('pointermove', mouseMove);
 
 
-    };
-
+    blob.canvas = canvas;
+    blob.init();
+    blob.render();
 };

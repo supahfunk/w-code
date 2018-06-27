@@ -28,6 +28,16 @@ Game Area
         font-size: 30px;
         font-weight: bold;
         transition: transform .5s $smooth;
+        overflow: hidden;
+        canvas {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         &.active {
             transform: translate(0);
         }
@@ -35,8 +45,6 @@ Game Area
             width: 100%;
             left: 0;
             top: 0;
-            background: #181617;
-            color: #fff;
             z-index: 10;
         }
     }

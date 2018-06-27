@@ -102,7 +102,7 @@ function getSpeed() {
         speed = scrollbar.offset.y - offsetY;
         offsetY = scrollbar.offset.y;
         $skewers.css({
-            transform: 'skewY(' + speed * -0.15 + 'deg)'
+            transform: 'skewY(' + speed * 0.15 + 'deg)'
             // transform: 'scale(' + (1 - (speed * 0.001)) + ')'
         });
         window.requestAnimationFrame(getSpeed);
@@ -160,8 +160,8 @@ function game4() {
         $("#item-4").fadeIn(1500, function () {
             scrollbarUpdate();
         });
-        if (end != null) {
-            init2();
+        if ($('#end').length) {
+            drawBlob('end', 500, 500, 200, '#141414');
         }
     });
 }
@@ -195,10 +195,11 @@ Doc Ready
 --------------------------------------------------*/
 $(function () {
     console.log('%c Coded by Websolute ', 'background: #01c0f6; color: #fff; border-radius: 20px; padding: 10px;');
+    if ($('#intro').length) {
+        drawBlob('intro', 500, 500, 200, '#000');
+    }
     scrollbarInit();
     getSpeed();
-
-    // splitText();
 });
 
 

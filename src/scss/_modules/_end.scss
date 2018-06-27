@@ -15,32 +15,32 @@ End
     position: relative;
     z-index: 3;
     padding-bottom: 100px;
-    @include xs {
-        padding: 40px 0;
-    }
+    overflow-x: hidden;
     canvas {
-        margin-top: -10vh;
+        width: 500px;
+        height: 500px;
         position: absolute;
-        @include xxs {
-            margin-top: -9vh;
+        left: 50%;
+        top: 18px;
+        transform: translateX(-50%);
+        @media (max-height: 480px) {
+            transform: translateX(-50%) scale(.9);
         }
     }
     .end-logo {
-        margin-top: -10vh;
         text-align: center;
         margin-bottom: 50px;
-        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: -10vh;
         @media (max-height: 480px) {
             margin-bottom: 40px;
-        }
-        @include xxs {
-            margin-top: -13vh;
+            transform: scale(.7);
         }
         img {
+            width: 500px;
+            height: auto;
+            max-width: none;
             margin: 0 auto;
         }
     }
